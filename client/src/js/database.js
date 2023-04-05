@@ -17,7 +17,7 @@ export const putDb = async (content) => {
   const db = await dbPromise;
   const tx = db.transaction(STORE_NAME, 'readwrite');
   const store = tx.objectStore(STORE_NAME);
-  const id = await store.put({ content });
+  const id = await store.put({ id:1, value:content });
   await tx.complete;
   console.log(`Added content with ID ${id} to the database`);
 };
@@ -27,7 +27,7 @@ export const getDb = async () => {
   const db = await dbPromise;
   const tx = db.transaction(STORE_NAME, 'readonly');
   const store = tx.objectStore(STORE_NAME);
-  const allContent = await store.getAll();
+  const allContent = await store.get(1);
   await tx.complete;
   console.log(`Retrieved ${allContent.length} items from the database`);
   return allContent;
